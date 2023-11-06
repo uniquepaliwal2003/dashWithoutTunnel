@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts Examples</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+    integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-theme-alpine.css">
+    
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+
+<body>
+  <!-- //Navbar -->
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+          <img src="https://www.iconaccounting.ie/img/logo-primary.png" alt="profile_picture">
+        </div>
+
+      <ul class="list-unstyled components">
+        <p>Graphs</p>
+        <li>
+          <a href="./index.html">HOME</a>
+        </li>
+        <li>
+          <a href="./download.html">Download</a>
+        </li>
+        <li>
+          <a href="./excel.html">Excel File</a>
+        </li>
+        <li>
+          <a href="./salesForceReport.html">Salesforce DB report</a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Page Content  -->
+    <div id="content" class="">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Navbar</span>
+          </button>
+          <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button> -->
+        </div>
+      </nav>
+      <!-- //graphs -->
+      <div id="mainWrapper">
+        <div class="row container-fluid justify-content-center showingdata">
+          <!-- Single graph for 
+          1. Total Contractor singed up per month
+          2. Total Active contractors signed up per month
+          3. Total Pending activation per month -->
+          <div class="row container-fluid justify-content-center">
+            <div class=" col-xl-8 col-lg-8 col-md-12 col-12 mb-2">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row justify-content-center">
+                    <div class="col d-flex justify-content-center">
+                      <h5 class="d-inline">User By Month</h5>
+                    </div>
+                    <div class="col-auto">
+                      <input onchange="userByMonth()"  type="date" id="startdateUserByMonth" value="2023-01-01" class="startDateRange">
+                      <input onchange="userByMonth()" type="date" id="enddateUserByMonth" value="2023-12-31" class="endDateRange">
+                      <button class="btn btn-sm btn-sm btn-primary btnUserByMonth" id="btnUserByMonth" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center">
+                  <!-- <div class="col"> -->
+                  <canvas id="UserByMonth" height="300px"></canvas>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+            <!-- Till Date for User Graph -->
+            <div class="col-xl-2 col-lg-2 col-md-10 col-10 mb-2">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row justify-content-center">
+                    <div class="col mx-auto justify-content-center">
+                    <!-- <div class="d-flex justify-content-center"> -->
+                      <h6 class="mx-auto text-center">Contractors</h6>
+                      <h6 class="mx-auto text-center">TillDate</h6>
+                    </div>
+                    <input onchange="userByMonthCummOne()" type="date" id="enddateConTillDate" value="2023-12-31" width="12px" class="endDateRange">
+                    <div class="col-5">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center">
+                  <!-- <div class="col"> -->
+                  <canvas id="UserByMonthCummOne" height="255px"></canvas>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row container-fluid justify-content-center">
+            <!--  Total contractors will all documents received 
+                  Total contractors with at least one missing information -->
+            <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3">
+              <div class="card">
+                <div class="card-header text-center">
+                  <div class="row justify-content-center">
+                    <div class="col-3"></div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <h5 class="d-inline">Documents</h5>
+                    </div>
+                    <div class="col-3">
+                      <button class="btn btn-primary btn-sm btnUserByMonthDocuments mb-2" id="btnUserByMonthDocuments" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+                    <div class="col-auto">
+                      <input onchange="allDocumentRecieved()" type="date" id="startdateDocuments" value="2023-01-01" class="startDateRange">
+                      <input onchange="allDocumentRecieved()" type="date" id="enddateUserByMonthDocuments" value="2023-12-31" class="endDateRange">
+                    </div>
+                </div>
+                
+                <div class="card-body d-flex justify-content-center align-items-center">
+                  <canvas id="TotalContractorsWithAllDocR" height="280px"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- Total new joiners per month Umbrella-->
+            <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3 ">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row justify-content-center">
+                    <div class="col d-flex justify-content-center">
+                      <h5 class="d-inline">New joiners per month Umbrella</h5>
+                    </div>
+                    <div class="col-auto">
+                      <input onchange="totalNewJoinersPerMont()" type="date" id="startdateDocuments1" value="2023-01-01" class="startDateRange">
+                      <input onchange="totalNewJoinersPerMont()" type="date" id="enddateDocuments" value="2023-12-31" class="endDateRange">
+                      <button class="btn btn-primary btn-sm btnUserByMonthUmbrella" id="btnUserByMonthUmbrella" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+                </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="TotalNewJoinersPerMonth" height="300px"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row container-fluid justify-content-center">
+          <!-- % contractors with all documents received -->
+          <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3">
+            <div class="card">
+              <div class="card-header text-center">
+                <h5> % - all documents received</h5>
+                <input onchange="percWithAllDocRec()" type="date" id="startdateperdoc" value="2023-01-01" class="startDateRange">
+                <input onchange="percWithAllDocRec()" type="date" id="enddateperdoc" value="2023-12-31" class="endDateRange">
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <div id="ContPerWithAllDocRec" height="300px"></div>
+                <!-- <button type="button" class="btn btn-primary">-</button> -->
+              </div>
+            </div>
+          </div>
+          <!-- % ID Pal , B10 , T&C , Agency contract , PPS , Bank details  -->
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3">
+            <div class="card">
+              <div class="card-header">
+                <div class="row justify-content-center">
+                  <div class="col-12 d-flex justify-content-center">
+                    <div class="col-auto">
+                      <h5 class="d-inline">Total Contractors With missing Documents</h5>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-sm btn-primary btnUserByMonthConMissDoc" id="btnUserByMonthConMissDoc" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <input onchange="missingDocsBar()" type="date" id="startdateMissDocBar" value="2023-01-01" class="startDateRange">
+                    <input onchange="missingDocsBar()" type="date" id="enddateMissDocBar" value="2023-12-31" class="endDateRange">
+                  </div>
+                  <div class="col-auto">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="TotalConWithMissingDocs" height="280px"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row container-fluid justify-content-center">
+          <!--  Total unique contractors paid each month -->
+          <!--  Total contractors with missing info before contract start date.
+                Total contractors with missing info after contract start date. -->
+          <!-- <div class="col-xl-4 col-lg-4 col-md-8 col-12 mb-3 justify-content-center"> -->
+            <!-- <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col d-flex justify-content-center">
+                    <h5 class="d-inline">Missing Information</h5>
+                    <input onchange="ChartWithMissingInfoBeforeContractStart()" type="date" id="startdateMissingDoc" value="2023-01-01">
+                    <input onchange="ChartWithMissingInfoBeforeContractStart()" type="date" id="enddateUserMissingDoc" value="2023-12-31">
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-primary btnUserByMonthMissInfo" id="btnUserByMonthMissInfo" style="background-color:rgba(2, 90, 190, 0.678)">Table</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="TotalContractorsWithMissInfoBeforeAndAfter" height="300px"></canvas>
+              </div>
+            </div> -->
+          <!-- </div> -->
+          <!-- total unique contractors paid each month -->
+
+          <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3">
+            <div class="card">
+            <div class="card-header text-center">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <h5>Total management fees each month Umbrella</h5>
+                </div>
+                <div class="col-auto">
+                  <input onchange="totalManagementFeesDeducted()" type="date" id="startDatetotalManagement" value="2023-01-01" class="d-inline startDateRange">
+                </div>
+                <div class="col-3">
+                  <input onchange="totalManagementFeesDeducted()" type="date" id="endDatetotalManagement" value="2023-12-31" class="d-inline endDateRange">
+                </div>
+              </div>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <canvas id="TotalManageFeesEachMonth" height="302px"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-8 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="row justify-content-center">
+                <div class="col-12 d-flex justify-content-center">
+                  <div class="col-auto">
+                    <h5 class="d-inline">Total Unique Contractor Paid/Month Umbrella</h5>
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-primary btn-sm btnUserByMonthUnique" id="btnUserByMonthUnique" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="startdatePaid/Month" value="2023-01-01" class="d-inline startDateRange">
+                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="enddatePaid/Month" value="2023-12-31" class="d-inline endDateRange">
+                </div>
+              </div>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <canvas id="TotalUniqueContPaidEachMon" height="320px"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="row container-fluid justify-content-center">
+          <!-- Total management fees each month -->
+
+          </div>
+          <!-- Total contractors with no management fees deducted. 
+          -->
+          <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3 justify-content-center">
+            <div class="card">
+              <div class="card-header">
+                <div class="row justify-content-center">
+                  <div class="col-12 d-flex justify-content-center">
+                    <h5 class="d-inline">Contractors with No management Fees Deducted</h5>
+                  </div>
+                  <div class="col-auto ">
+                        <input onchange="totalContractorWithNoManagementFeesDeducted()" type="date" id="startDatetotalNOManagement" value="2023-01-01" class="d-inline mb-3 startDateRange" >
+                        <input onchange="totalContractorWithNoManagementFeesDeducted()" type="date" id="endDatetotalNOManagement" value="2023-12-31" class="d-inline mb-3 endDateRange">
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-sm btn-primary btnUserByMonthNoMagF" id="btnUserByMonthNoMagF" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <div class="numberCircle" id="TotalContWithNoMangFeesDeducted" height="300px">0</div>
+              </div>
+            </div>
+          </div>
+                    <!-- Total contractors not paid -->
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-3 ">
+                      <div class="card">
+                        <div class="card-header">
+                          <div class="row justify-content-center">
+                            <div class="col-12 d-flex justify-content-center">
+                              <div class="row justify-content-center">
+                                <div class="col-10">
+                                  <h5 class="d-inline">Total Contractor Not paid</h5>
+                                </div>
+                                <div class="col-1">
+                                  <button class="btn btn-primary btnUserByMonthConNotPaid btn-sm" id="btnUserByMonthConNotPaid" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="col-auto justify-content-center">
+                                  <input onchange="totalContractorNotPaidgraph()" type="date" id="startDateContNotPaid" value="2023-01-01" class="d-inline startDateRange">                      
+                                  <input onchange="totalContractorNotPaidgraph()" type="date" id="endDateContNotPaid" value="2023-12-31" class="d-inline endDateRange">
+                              </div>
+                            <div class="col-auto">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                          <canvas id="TotalConNotPaid" height="300px"></canvas>
+                        </div>
+                      </div>
+                    </div>
+        </div>
+        <div class="row container-fluid justify-content-center">
+
+          <!-- Contractors start date within 2 months.
+            Contractors before 2 months start date. -->
+          <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3 ">
+            <div class="card">
+              <div class="card-header">
+                <div class="row justify-content-center">
+                  <div class="col d-flex justify-content-center">
+                    <h5 class="d-inline">Start date within two months</h5>
+                    <!-- <div class="row">
+                      <div class="col-3">
+                        <input onchange="contractorStartDateWithinTwoMon()" type="date" id="startDateWithinTwoMonS" value="2023-01-01" class="d-inline">
+                      </div>
+                      <div class="col-3">
+                        <input onchange="contractorStartDateWithinTwoMon()" type="date" id="endDateWithinTwoMonS" value="2023-12-31" class="d-inline">
+                      </div>
+                    </div> -->
+                  </div>
+                  <div class="col-auto">
+                    <!-- <button class="btn btn-primary btnUserByMonthStartTwo" id="btnUserByMonthStartTwo" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button> -->
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="ContStartDateWithinTwoMon" height="300px"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- Contractors with no invoice sent and start date before 2 months   -->
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 px-3 mb-3 ">
+            <div class="card">
+              <div class="card-header">
+                <!-- <div class="row"> -->
+                  <!-- <div class="col d-flex justify-content-center">
+                    <h5 class="d-inline">No invoice sent and start date within 2 months</h5>
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-primary btnUserByMonthMonInvo" id="btnUserByMonthMonInvo" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                  </div> -->
+                <!-- </div> -->
+                  <div class="row justify-content-center">
+                    <div class="col d-flex justify-content-center">
+                      <h5 class="d-inline">No invoice send and start date within 2 months </h5>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-primary btn-sm btnUserByMonthMonInvo" id="btnUserByMonthMonInvo" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <div class="numberCircle" id="btnUserByMonthMonPoint" height="300px">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-10 col-md-12 col-12 px-3 mb-3 ">
+          <div class="card justify-content-center">
+            <div class="card-header justify-content-center">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <h5>Upload an Excel File - </h5>
+                </div>  
+              </div>  
+            </div>
+            <div class="card-body">
+              <div class="container mt-2">
+                <form id="formForXL" enctype="multipart/form-data">
+                  <div class="form-group">
+                      <label for="excelFile">Select an Excel file (XLSX):</label>
+                      <input type="file" name="file" id="excelFile" accept=".xlsx" class="form-control-file">
+                  </div>
+                  <div class="form-group">
+                      <label for="startDate">Start Date:</label>
+                      <input type="date" name="startDate" id="startDateExcel" class="form-control startDateRange">
+                  </div>
+                  <div class="form-group">
+                      <label for="endDate">End Date:</label>
+                      <input type="date" name="endDate" id="endDateExcel" class="form-control endDateRange">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Upload and Process</button>
+              </form>
+              </div>     
+              <div id="result1" class="mt-4">
+                Results will be displayed here
+            </div>       
+
+            </div>
+          </div>
+        </div>
+      </div> -->
+      </div>
+      </div>
+      <div> 
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- user TAble -->
+        <div class="showingIt" id="TableContainer">
+          <button class="btn btn-secondary" id="BackMainContent">Back</button>
+          <h5 class="mt-3 mb-3">All Contractors-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div class="d-inline mb-3">Start Date -</div>
+              <input onchange="userByMonthTable()" type="date" id="startdateuserByMonthTable" value="2023-01-01" class="mb-3 startDateRange">
+            </div>
+            <div class="col-2">
+              <div class="d-inline mb-3">End Date -</div>
+              <input onchange="userByMonthTable()" type="date" id="enddateuserByMonthTable" value="2023-12-31" class="mb-3 endDateRange">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyUserByMonthGrid()">Export</button>
+            </div>
+          </div>
+            <div id="myGridUserAll" style="height: 1150px; width :100%;" class="ag-theme-alpine"></div>
+          <!-- <h5 class="mt-3 mb-3">Active Contractors-</h5> -->
+          <!-- <input onchange="userByMonthTable()" type="date" id="startdateUserByMonth" value="2023-01-01"> -->
+          <!-- <input onchange="userByMonthTable()" type="date" id="enddateUserByMonth" value="2023-12-31"> -->
+          <!-- <div id="myGridActive" style="height: 700px; width:60vw;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Pending Contractors-</h5> -->
+          <!-- <input onchange="userByMonthTable()" type="date" id="startdateUserByMonth" value="2023-01-01"> -->
+          <!-- <input onchange="userByMonthTable()" type="date" id="enddateUserByMonth" value="2023-12-31"> -->
+          <!-- <div id="myGridPending" style="height: 700px; width:100vw;" class="ag-theme-alpine"></div> -->
+        </div>
+        <!-- Documents -->
+        <div class="showingIt" id="TableContainerDocuments">
+          <button class="btn btn-secondary" id="BackMainContentDocuments">Back</button>
+          <h5 class="mt-3 mb-3">Documents Received-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="DocumentsRecMissTableOne()" type="date" id="startdateDocMissRecOne" value="2023-01-01" >
+            </div>
+            <div class="col-2">
+              <div>End date- </div>
+              <input class="mb-3 endDateRange" onchange="DocumentsRecMissTableOne()" type="date" id="enddateDocMissRecOne" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridDocRecMisstableOne()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllDocumentsOne" style="height: 1150px; width :100% ;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Documents Missing-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="DocumentsRecMissTableTwo()" type="date" id="startdateDocMissRecTwo" value="2023-01-01" >
+            </div>
+            <div class="col-2">
+              <div>End date- </div>
+              <input class="mb-3 endDateRange" onchange="DocumentsRecMissTableTwo()" type="date" id="enddateDocMissRecTwo" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridDocRecMisstableTwo()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllDocumentsTwo" style="height: 1150px; width :100% ;"  class="ag-theme-alpine"></div>
+        </div>
+        <!-- Joiners Table -->
+        <div class="showingIt" id="TableContainerUmbrella">
+          <button class="btn btn-secondary" id="BackMainContentUmbrella">Back</button>
+          <h5 class="mt-3 mb-3">Total New Joiners Umbrella-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="Umbrella()" type="date" id="startdateUmbrella" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="Umbrella()" type="date" id="enddateUmbrella" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridUmbrella()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllUmbrella" style="height: 1150px; width :100% ;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- Missing Docs -->
+        <div class="showingIt" id="TableContainerConMissDoc">
+          <button class="btn btn-secondary" id="BackMainContentConMissDoc">Back</button>
+          <h5 class="mt-3 mb-3">Missing Documents-</h5>
+          <h5 class="mt-3 mb-3">Missing IDpal-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="MissingDocumentsIDpal()" type="date" id="startdateidpal" value="2023-01-01" >
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="MissingDocumentsIDpal()" type="date" id="enddateidpal" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGrididpal()">Export</button>
+            </div>
+          </div>
+          <div id="myGrididpal" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Missing B10-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="MissingDocumentsB10()" type="date" id="startdateb10" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="MissingDocumentsB10()" type="date" id="enddateb10" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridB10()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserb10" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Missing T&C-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="MissingDocumentstandc()" type="date" id="startdatetandc" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="MissingDocumentstandc()" type="date" id="enddatetandc" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridtandc()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUsertandc" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Missing Agency Contract-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="MissingDocumentsagency()" type="date" id="startdateagency" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="MissingDocumentsagency()" type="date" id="enddateagency" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridagency()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUseragency" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Missing PPS-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="MissingDocumentspps()" type="date" id="startdatepps" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="MissingDocumentspps()" type="date" id="enddatepps" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridpps()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserpps" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <!-- <h5 class="mt-3 mb-3">Missing Bank Details-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3" onchange="MissingDocumentsbankdetails()" type="date" id="startdatebankDetails" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3" onchange="MissingDocumentsbankdetails()" type="date" id="enddatebankDetails" value="2023-12-31">
+            </div>
+          </div> -->
+          <!-- <div id="myGridUserbankdetails" style="height: 700px; width:60vw;" class="ag-theme-alpine"></div> -->
+        </div>
+        <!-- Missing INfo -->
+        <!-- <div class="showingIt" id="TableContainerMissInfo">
+          <button class="btn btn-secondary" id="BackMainContentMissInfo">Back</button>
+          <h3 class="mt-3 mb-3">Missing Information-</h3>
+        </div> -->
+        <!-- Contractor with no management fees -->
+        <div class="showingIt" id="TableContainerUmbrella">
+          <button class="btn btn-secondary" id="BackMainContentUmbrella">Back</button>
+          <h5 class="mt-3 mb-3">Total New Joiners Umbrella-</h5>
+          <div id="myGridUserAllUmbrella" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- Unique Contractors paid -->
+        <div class="showingIt" id="TableContainerUnique">
+          <button class="btn btn-secondary" id="BackMainContentUnique">Back</button>
+          <h5 class="mt-3 mb-3">Unique Contractors Paid-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="UniqueConPerMontPerMonthUmbrella()" type="date" id="startdateuniquepaid" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="UniqueConPerMontPerMonthUmbrella()" type="date" id="enddateuniquepaid" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridUniqueconPer()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllUnique" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- No Management Fees -->
+        <div class="showingIt" id="TableContainerNoMagF">
+          <button class="btn btn-secondary" id="BackMainContentNoMagF">Back</button>
+          <h5 class="mt-3 mb-3">No management Fees-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="contractorsWithNoManagementFeesDeducted()" type="date" id="startdatenomagF" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="contractorsWithNoManagementFeesDeducted()" type="date" id="enddatenomagF" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridUserAllNoMag()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllNoMagF" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- Contractors Not paid -->
+        <div class="showingIt" id="TableContainerConNotPaid">
+          <button class="btn btn-secondary" id="BackMainContentConNotPaid">Back</button>
+          <h5 class="mt-3 mb-3">Contractors Not paid-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="totalContractorNotPaid()" type="date" id="startdatenotpaidCon" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="totalContractorNotPaid()" type="date" id="enddatenotpaidCon" value="2023-12-31">
+            </div>
+            <div class="col-8 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridAllConPaid()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllConNotPaid" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- No invoice Sent and start date within two months -->
+        <div class="showingIt" id="TableContainerStartTwo">
+          <button class="btn btn-secondary" id="BackMainContentStartTwo">Back</button>
+          <h5 class="mt-3 mb-3">Table1-</h5>
+          <div id="myGridUserAllStartTwoOne" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+          <h5 class="mt-3 mb-3">Table2-</h5>
+          <div id="myGridUserAllStartTwoTwo" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+        <!-- No invoice Sent and start date within two months -->
+        <div class="showingIt" id="TableContainerMonInvo">
+          <button class="btn btn-secondary" id="BackMainContentMonInvo">Back</button>
+          <div class="row">
+            <div class="col-8">
+              <h5 class="mt-3 mb-3">No invoice Sent and Start date withIn two months-</h5>
+            </div>
+            <div class="col-4 text-right">
+              <button class="btn btn-primary btn-sm mb-1 text-right" onclick="onExportClickExportmyGridUserAllMonInvo()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllMonInvo" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+      <script src="js/port.js"></script>
+      <script src="js/sidebar.js"></script>
+      <script src="js/tables.js"></script>
+      <script src="js/graphs.js"></script>
+      <script src="js/creatingTables.js"></script>
+      <script src="js/forms.js"></script>
+</body>
+
+</html>

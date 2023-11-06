@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts Examples</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+    integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-grid.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-theme-alpine.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+
+<body>
+  <!-- //Navbar -->
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <img src="https://www.iconaccounting.ie/img/logo-primary.png" alt="profile_picture">
+      </div>
+
+      <ul class="list-unstyled components">
+        <p>Graphs</p>
+        <li>
+          <a href="./index.html">HOME</a>
+        </li>
+        <li>
+          <a href="./download.html">Download</a>
+        </li>
+        <li>
+          <a href="./excel.html">Excel File</a>
+        </li>
+        <li>
+          <a href="./salesForceReport.html">Salesforce DB report</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Page Content  -->
+    <div id="content" class="">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info btn-sm">
+            <i class="fas fa-align-left"></i>
+            <span>Navbar</span>
+          </button>
+        </div>
+      </nav>
+      <!-- //contents -->
+      <div id="mainWrapperSalesReport">
+        <div class="row container-fluid justify-content-center showingdata">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 col-lg-10 col-md-12 col-12 px-3 mb-3 ">
+            <div class="card justify-content-center">
+              <div class="card-header justify-content-center">
+                <h3>
+                    Salesforce Database Report -
+                </h3>
+            </div>
+            <div class="card-body">
+                  <form id="formForSalesForce" enctype="multipart/form-data">
+                      <div class="row">
+                        <div >
+                            <div class="form-group">
+                                <label for="select-month">Select Month :</label>
+                                <select class="form-control" id="select-month" name="month" required>
+                                    <option value="" selected disabled>Month</option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="select-year">Select Year : </label>
+                                <select class="form-control" id="select-year" name="year" required>
+                                    <option value="" selected disabled>Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mt-3">Submit</button>
+                      </div>
+                  </form>
+                  <div class="row">
+                    <div id="result1" class="mt-2 mb-2 col-xl-6 col-lg-6 col-md-12 col-12 mb-3">
+                      <!-- emails and email number -->
+                      <!-- Results will be displayed here -->
+                    </div>
+                    <div id="result2" class="mt-2 mb-2 col-xl-6 col-lg-6 col-md-12 col-12 mb-3 ">
+                      <!-- Company type  -->
+                      <!-- Results will be displayed here -->
+                    </div>
+                    <div id="result3" class="mt-2 col-12">
+                      <!-- company status -->
+                      <!-- Results will be displayed here -->
+                    </div>
+                    <div id="result4" class="mt-2 col-12">
+                      <!-- reconciliation  -->
+                      <!-- Results will be displayed here -->
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+      <!-- making Tables  -->
+      <div class="showingIt" id="TableContainerEmails">
+        <button class="btn btn-secondary btn-sm" id="BackMainContentEmails">Back</button>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for Portal Present Emails-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm" onclick="onExportClickExportTotalEmailsSalesGrid()">Export</button>
+          </div>
+        </div>
+        <div id="myGridUserAllEmails" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for Portal Absent Emails-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm" onclick="onExportClickExportTotalEmailsAbsentSalesGrid()">Export</button>
+          </div>
+        </div>
+        <div id="myGridUserAllEmailsAbsent" style="height: 600px; width:30%;" class="ag-theme-alpine"></div>
+
+      </div>
+
+      <div class="showingIt" id="TableContainerCompanyType">
+        <button class="btn btn-secondary btn-sm" id="BackMainContentCompanyType">Back</button>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for PAYE-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm mt-2" onclick="onExportClickExportTotalCompanyTypeGrid1()">Export</button>
+          </div>
+        </div>
+        <div id="myGridUserAllCompanyType1" style="height: 600px; width:100%;" class="ag-theme-alpine"></div>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for Director Member-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm mt-2" onclick="onExportClickExportTotalCompanyTypeGrid2()">Export</button>
+          </div>
+        </div>
+        <div id="myGridUserAllCompanyType2" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for PLC Member-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm mt-2" onclick="onExportClickExportTotalCompanyTypeGrid3()">Export</button>
+          </div>
+        </div>
+        <div id="myGridUserAllCompanyType3" style="height: 400px; width:100%;" class="ag-theme-alpine"></div>
+      </div>
+    
+      <div class="showingIt" id="TableContainerClientStatus">
+        <button class="btn btn-secondary btn-sm" id="BackMainContentClientStatus">Back</button>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for Contractors status-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm" onclick="onExportClickExportTotalClientStatusGrid()">Export</button>
+          </div>
+          <div class="col-2"><input type="month" id="inputClientStatusMonth" class="mb-2" onchange="gridTotalClientStatus()"></div>
+        </div>
+        <div id="myGridUserAllClientStatus" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+      </div>
+      
+      <div class="showingIt" id="TableContainerRlaStatus">
+        <button class="btn btn-secondary btn-sm" id="BackMainContentRlaStatus">Back</button>
+        <div class="row">
+          <div class="col-11">
+            <h5 class="mt-3 mb-3">Information for Contractors Reconciliation Status-</h5>
+          </div>
+          <div class="col-1">
+            <button class="btn btn-primary btn-sm " onclick="onExportClickExportRlaStatusGrid()">Export</button>
+          </div>
+          <div class="col-2"><input type="month" id="inputRlaStatusMonth" class="mb-2" onchange="gridTotalRlaStatus()"></div>
+        </div>
+        <div id="myGridUserAllRlaStatus" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+      </div>
+
+
+      <script>
+        const selectYear = document.getElementById('select-year');
+        const currentYear = new Date().getFullYear();
+
+        for (let year = currentYear; year >= 2021; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            selectYear.appendChild(option);
+        }
+        function makeCorrectDefaultValuesForInputTable34(value){
+          console.log("j;sdlkfja;sdlkfj ")
+          console.log(value)
+          let inputClientStatusMonth = document.getElementById('inputClientStatusMonth');
+          let inputRlaStatusMonth = document.getElementById('inputRlaStatusMonth');
+          inputClientStatusMonth.value = value;
+          inputRlaStatusMonth.value = value;
+        }
+        
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+      <script src="js/port.js"></script>
+      <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+      <script src="js/sidebar.js"></script>
+      <script src="js/tablesForSalesForce.js"></script>
+      <script src="js/cavasForGraph.js"></script>
+    <script src="js/salesforce.js"></script>
+</body>
+
+</html>

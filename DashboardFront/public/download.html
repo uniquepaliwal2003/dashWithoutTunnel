@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts Examples</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+
+  <!-- jQuery CDN - Slim version (=without AJAX) -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+    integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-grid.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ag-grid-community@YOUR_AG_GRID_VERSION/styles/ag-theme-alpine.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+</head>
+
+<body>
+  <!-- //Navbar -->
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <img src="https://www.iconaccounting.ie/img/logo-primary.png" alt="profile_picture">
+      </div>
+
+      <ul class="list-unstyled components">
+        <p>Graphs</p>
+        <li>
+          <a href="./index.html">HOME</a>
+        </li>
+        <li>
+          <a href="./download.html">Download</a>
+        </li>
+        <li>
+          <a href="./excel.html">Excel File</a>
+        </li>
+        <li>
+          <a href="./salesForceReport.html">Salesforce DB report</a>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Page Content  -->
+    <div id="content" class="">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info btn-sm">
+            <i class="fas fa-align-left"></i>
+            <span>Navbar</span>
+          </button>
+          <!-- btn to add data , with help of bootrap modal -->
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#addDataToDb">
+            Upload Excel
+          </button>
+          <div class="modal fade" id="addDataToDb" tabindex="-1" role="dialog" aria-labelledby="addDataToDb" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addExcelTitle">Add Excel File</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="removeMessageFromDiv2">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                   <form id="formForXLReal" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="excelFile">Select an Excel file (XLSX):</label>
+                      <input type="file" name="file" id="excelFile" accept=".xlsx" class="form-control-file" required>
+                    </div>
+                    <div class="row mb-2">
+                      <label for="month" id="monthAndYear" required>Select the Month and Year</label>
+                      <div class="col-3"><input type="month" id="monthAndYear" name="monthAndYear"></div>
+                    </div>
+                    <div id="addingDataToDatabase" class="mt-2"></div>
+                    <div id="addingExcelToDatabase" class="mt-2"></div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="removeMessageFromDiv1">Close</button>
+                      <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button> -->
+        </div>
+      </nav>
+      <!-- //contents -->
+      <div id="mainWrapperExcel">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 col-lg-10 col-md-12 col-12 px-3 mb-3 ">
+            <div class="card justify-content-center">
+              <div class="card-header justify-content-center">
+                <h5>
+                  Download and Upload - 
+                </h5>
+                <div class="row">
+                    <div class="col-1">
+                        <label for="yearInput" class="col-form-label">Year:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="number" class="form-control" id="yearInput" name="yearInput" min="2021" max="2030">
+                    </div>
+                    <div id="someMessageToShow"></div>
+              </div>
+              </div>
+              <div class="card-body">
+                <table class="table">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.NO</th>
+                        <th scope="col">MONTH</th>
+                        <th scope="col">Options</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td >1</td>
+                        <td>January</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="01">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >2</td>
+                        <td>Feburary</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="02">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >3</td>
+                        <td>March</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="03">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >4</td>
+                        <td>April</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="04">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >5</td>
+                        <td>May</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="05">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >6</td>
+                        <td>June</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="06">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >7</td>
+                        <td>July</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="07">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >8</td>
+                        <td>August</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="08">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >9</td>
+                        <td>September</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="09">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >10</td>
+                        <td>October</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="10">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >11</td>
+                        <td>November</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="11">Download</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td >12</td>
+                        <td>December</td>
+                        <td>
+                          <button class="btn btn-outline-primary btn-sm" id="12">Download</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+      <script>
+        const elementsToRemove = document.getElementById('removeMessageFromDiv2');
+        elementsToRemove.addEventListener('click',()=>{
+          console.log("Called me")
+          const resultDivAddModel = document.getElementById('addingDataToDatabase');
+          resultDivAddModel.innerHTML = ''
+        })
+        const elementsToRemove2 = document.getElementById('removeMessageFromDiv1');
+        elementsToRemove2.addEventListener('click',()=>{
+          console.log("calledme")
+          const resultDivAddModel = document.getElementById('addingDataToDatabase');
+          resultDivAddModel.innerHTML = ''
+        })
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/port.js"></script>
+    <script src="js/graphsExcel.js"></script>
+    <script src="js/tablesExcel.js"></script>
+    <script src="js/realForm.js"></script>
+    <script src="js/download.js"></script>
+
+</body>
+
+</html>

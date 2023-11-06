@@ -1,0 +1,1 @@
+correc query no management fees deducted - missing date_joined , add status of client active and limited_active.

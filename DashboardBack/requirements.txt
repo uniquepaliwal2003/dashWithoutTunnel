@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+# openpyxl
+python-multipart
+pandas
+pandas
+pymysql
+paramiko
+sshtunnel
+requests
+httpx
