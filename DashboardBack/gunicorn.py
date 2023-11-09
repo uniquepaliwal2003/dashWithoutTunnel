@@ -5,8 +5,8 @@ load_dotenv()
 
 name = "Hello"
 
-accesslog = "/root/var/54.228.225.145/DashboardBack/gunicorn-access.log"
-errorlog = "/root/var/54.228.225.145/DashboardBack/gunicorn-error.log"
+accesslog = "/home/ubuntu/var/54.228.253.219/DashboardBack/gunicorn-access.log"
+errorlog = "/home/ubuntu/var/54.228.253.219/DashboardBack/gunicorn-error.log"
 
 bind = "0.0.0.0:8000"
 
