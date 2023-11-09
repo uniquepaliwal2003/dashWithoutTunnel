@@ -40,7 +40,6 @@ formReal.addEventListener('submit', async (e) => {
                     await saveInTheDb(formData);
                     resultDivAddModel.innerHTML = '';
                     resultDivAddModel.innerHTML+='<h6>Added Data to Database</h6>'
-                    await saveExcelFileToTheServer();
                 } catch (error) {
                     console.error(error);
                 }
@@ -53,47 +52,6 @@ formReal.addEventListener('submit', async (e) => {
     }
 });
 
-async function saveExcelFileToTheServer(){
-    const formData = new FormData(formReal);
-    let startDate = "";
-    value = ""
-    for (const entry of formData.entries()) {
-        const [name, revalue] = entry;
-        if(name == 'monthAndYear')
-            value = revalue;
-    }
-    const [year,monthi] = value.split("-");
-    const yearNum = parseInt(year);
-    const monthNum = parseInt(monthi);
-    const sDate = new Date(yearNum,monthNum-1,1);
-    const currentDate = new Date();
-    const yearstart = sDate.getFullYear();
-    const monthstart = String(sDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
-    const daystart = String(sDate.getDate()).padStart(2, '0');
-    startDate = `${yearstart}-${monthstart}-${daystart}`;
-    formData.append("monthStartDate", startDate);
-    try {
-        const response = await fetch(`http://${port}/api/uploadExcelToTheServer`, {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            const resultDivAddModel = document.getElementById('addingExcelToDatabase');
-            resultDivAddModel.innerHTML =''
-            resultDivAddModel.innerHTMl = 'Excel Saved'
-        } else {
-            const data = await response.json();
-            const resultDivAddModel = document.getElementById('addingExcelToDatabase');
-            resultDivAddModel.innerHTML =''
-            resultDivAddModel.innerHTMl = 'Error While Saving Excel File'
-            console.log("Response not OK:", response.status, response.statusText);
-        }
-    } catch (error) {
-        console.log("Error while checking if the Excel exists:", error);
-    }
-}
 
 async function saveInTheDb(formData){
     let startDate = "";

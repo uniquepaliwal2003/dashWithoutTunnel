@@ -16,38 +16,82 @@ from databaseReport import new_close_mysql_connection,new_connect_to_mysql
 app = FastAPI()
 conn = None 
 tunnel = 1
-mysql_connection = connect_to_mysql()
+# mysql_connection = connect_to_mysql()
 tunnel_report = 1
-mysql_connection_report = new_connect_to_mysql()
+# mysql_connection_report = new_connect_to_mysql()
 
 
 app = FastAPI()
 
 async def queryFunction(query):
     values = []
+    mysql_connection = None
+    try:
+        mysql_connection = connect_to_mysql()
+    except Exception as e:
+        print("error While connecting to mysql icon db")
     if mysql_connection:
         try:
             cursor = mysql_connection.cursor()
             cursor.execute(query)
             values = cursor.fetchall()
             cursor.close()
+            close_mysql_connection(mysql_connection)
         except Exception as e:
             print("Getting error while fetching the query ",e)
             raise HTTPException(status_code=500, detail="Internal Server Error")
     return values
 
+# async def queryFunction_report(query):
+#     values = []
+#     mysql_connection_report = None
+#     try:
+#         mysql_connection_report = new_connect_to_mysql()
+#     except Exception as e:
+#         print("error While connecting to mysql reports icon db",e)
+#     if mysql_connection_report:
+#         try:
+#             cursor = mysql_connection_report.cursor()
+#             cursor.execute(query)
+#             values = cursor.fetchall()
+#             cursor.close()
+#             mysql_connection_report.commit()
+#             new_close_mysql_connection(mysql_connection_report)
+#         except Exception as e:
+#             print("Getting error while fetching the query ",e)
+#             raise HTTPException(status_code=500, detail="Internal Server Error")
+#     return values
+
 async def queryFunction_report(query):
     values = []
+    mysql_connection_report = None
+    try:
+        mysql_connection_report = new_connect_to_mysql()
+    except Exception as e:
+        print("Error while connecting to MySQL reports icon db", e)
+        # Log the error or handle it appropriately
+        return values  # Return an empty list to indicate failure
+
     if mysql_connection_report:
         try:
             cursor = mysql_connection_report.cursor()
             cursor.execute(query)
             values = cursor.fetchall()
-            cursor.close()
-            mysql_connection_report.commit()
         except Exception as e:
-            print("Getting error while fetching the query ",e)
+            print("Error while executing the query", e)
             raise HTTPException(status_code=500, detail="Internal Server Error")
+        finally:
+            # Ensure the cursor is closed
+            cursor.close()
+
+            # Ensure the connection is closed
+            try:
+                mysql_connection_report.commit()
+            except Exception as e:
+                print("Error while committing changes", e)
+            finally:
+                new_close_mysql_connection(mysql_connection_report)
+
     return values
 
 
@@ -68,32 +112,32 @@ def hello():
     return {"Hello":"world"}
 
 # Endpoint to get client_userClient Table;
-@app.get("/api/client_userClient")
-def client_userClient():
-    if tunnel:
-        mysql_connection = connect_to_mysql()
-        if mysql_connection:
-            try:
-                cursor = mysql_connection.cursor()
-                headers = ['*']
-                query = "SELECT {} FROM client_userclient limit 1".format(*headers)
-                cursor.execute(query)
-                values = cursor.fetchall()
-                cursor.close()
-                return {
-                    "status_code":200,
-                    "data":{
-                        "headers": headers,
-                        "values":values
-                    }
-                }
-            except Exception as e:
-                print("Getting Unique error while fethcing query",e)
-                raise HTTPException(status_code=500, detail={
-                    "status_code":500,
-                    "message":'something went wrong: ' + str(e)
-                })
-    return []
+# @app.get("/api/client_userClient")
+# def client_userClient():
+#     if tunnel:
+#         mysql_connection = connect_to_mysql()
+#         if mysql_connection:
+#             try:
+#                 cursor = mysql_connection.cursor()
+#                 headers = ['*']
+#                 query = "SELECT {} FROM client_userclient limit 1".format(*headers)
+#                 cursor.execute(query)
+#                 values = cursor.fetchall()
+#                 cursor.close()
+#                 return {
+#                     "status_code":200,
+#                     "data":{
+#                         "headers": headers,
+#                         "values":values
+#                     }
+#                 }
+#             except Exception as e:
+#                 print("Getting Unique error while fethcing query",e)
+#                 raise HTTPException(status_code=500, detail={
+#                     "status_code":500,
+#                     "message":'something went wrong: ' + str(e)
+#                 })
+#     return []
 
 
 @app.get("/api/getUserByMonth")
@@ -1692,28 +1736,30 @@ async def get_total_new_joiners_per_mont():
         return []
     
 @app.post("/api/checkIfItIsPresentMonth")
-async def get_total_new_joiners_per_mont( monthStartDate : date = Form(...) ):
+async def get_total_new_joiners_per_mont( file: UploadFile = File(...) ,monthStartDate : date = Form(...) ,monthAndYear: str = Form(...)):
     if tunnel_report:
         value=[]
         message = "Excel Already Exist"
-        print(monthStartDate)
         date = monthStartDate.strftime("%Y-%m-%d")
         errorMessage = "No error"
         query=f"""SELECT count(*) FROM excel_month_exist WHERE date = "{date}" """
         try:
-            print(date)
             value = await queryFunction_report(query)
             print(value)
             print(value[0][0]==0)
             if value[0][0] == 0 :
                 valueNew = []
                 message = "Excel does not exist in db , entering the month in database"
-                queryNew =f"""INSERT INTO excel_month_exist (date) value("{date}");"""
+                queryNew =f"""INSERT INTO excel_month_exist (date,file_path) value("{date}","upload/{monthAndYear}");"""
                 # print(f"""INSERT INTO month_exist value("{date}")""")
+                # Save the file to a server location
                 try:
                     valueNew = await queryFunction_report(queryNew)
+                    file_path = f"uploads/{monthAndYear}"  # Change the path as needed
+                    with open(file_path, "wb") as server_file:
+                        server_file.write(file.file.read())
                 except Exception as e:
-                    print("error in entering the month of excel - ",e)
+                    print("error in entering the month of excel or uploading file in server - ",e)
                     errorMessage =  e
                 # print(valueNew)
         except Exception as e:
@@ -2069,17 +2115,6 @@ async def sales_force_table_rla_status( month : str = Form(...) , year : str = F
         print("No tunnel_report")
         return []
     
-@app.post("/api/uploadExcelToTheServer")
-async def upload_excel_to_the_database(file: UploadFile = File(...),startDate: date = Form(...),endDate: date = Form(...)):
-    if tunnel_report:
-        message = "No Error"
-        # TODO : Write this api
-        return { 
-                "Message":message
-            }
-    else:
-        print("No tunnel_report")
-        return []
     
 @app.post("/api/getAExcelFromServer")
 async def get_a_excel_from_server( ):

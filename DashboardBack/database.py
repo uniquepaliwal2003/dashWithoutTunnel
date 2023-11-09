@@ -20,7 +20,7 @@ def connect_to_mysql():
             database=mysql_database
         )
         if mysql_connection.open:
-            print(f"Connected to MySQL database '{mysql_database}' through SSH tunnel")
+            print(f"Connected to MySQL database")
             return mysql_connection
         else:
             print("Failed to connect to MySQL database")
