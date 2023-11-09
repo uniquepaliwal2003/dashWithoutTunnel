@@ -9,3 +9,6 @@ paramiko
 sshtunnel
 requests
 httpx
+gunicorn
+httptools
+uvtools
