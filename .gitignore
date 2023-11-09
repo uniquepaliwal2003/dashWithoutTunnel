@@ -2,4 +2,4 @@ __pycache__/
 DashboardBack/venv
 DashboardFront/node_modules
 *.log
-DashboardBack/upload
+DashboardBack/uploads
