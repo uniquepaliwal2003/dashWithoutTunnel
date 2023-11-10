@@ -1152,7 +1152,7 @@ async def upload_excel_grid_absent_emails(file :UploadFile = File(...)):
             print(len(email_given))
             valueA.sort()
             return {
-                        "not_present_emails":valueP
+                        "not_present_emails":valueA
             }
         else:
             print("No tunnel");
@@ -1882,6 +1882,7 @@ async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: d
                 response.raise_for_status()
                 dataAbsentEmails = response.json()
                 # dataAbsentEmails = {'not_present_emails':['zantro20@gmail.com','paliwalunique@gmail.com']}
+                if(dataAbsentEmails)
                 print(dataAbsentEmails)
                 for row in dataAbsentEmails["not_present_emails"]:
                     try:
