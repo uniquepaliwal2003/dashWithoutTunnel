@@ -1882,15 +1882,15 @@ async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: d
                 response.raise_for_status()
                 dataAbsentEmails = response.json()
                 # dataAbsentEmails = {'not_present_emails':['zantro20@gmail.com','paliwalunique@gmail.com']}
-                if(dataAbsentEmails)
-                print(dataAbsentEmails)
-                for row in dataAbsentEmails["not_present_emails"]:
-                    try:
+                if dataAbsentEmails and  len(dataAbsentEmails["not_present_emails"]) != 0:
+                    print(dataAbsentEmails)
+                    for row in dataAbsentEmails["not_present_emails"]:
+                      try:
                         email = row
                         sql = f"INSERT INTO {table_name_absent_emails} (email, date_month_excel_date) VALUES ("
                         sql += f"""'{email}', '{startDate}' );"""
                         await queryFunction_report(sql)
-                    except Exception as e:
+                      except Exception as e:
                         print("Error while in absent table")
                         message = e
         except httpx.RequestError as e:
