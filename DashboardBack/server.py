@@ -11,7 +11,8 @@ from pydantic import BaseModel
 import httpx
 import requests
 from databaseReport import new_close_mysql_connection,new_connect_to_mysql
-
+import shutil
+import os
 
 app = FastAPI()
 conn = None 
@@ -1750,14 +1751,18 @@ async def get_total_new_joiners_per_mont( file: UploadFile = File(...) ,monthSta
             if value[0][0] == 0 :
                 valueNew = []
                 message = "Excel does not exist in db , entering the month in database"
-                queryNew =f"""INSERT INTO excel_month_exist (date,file_path) value("{date}","upload/{monthAndYear}");"""
+                queryNew =f"""INSERT INTO excel_month_exist (date,file_path) value("{date}","/home/ubuntu/var/54.228.253.219/DashboardBack/uploads/{monthAndYear}");"""
                 # print(f"""INSERT INTO month_exist value("{date}")""")
                 # Save the file to a server location
                 try:
                     valueNew = await queryFunction_report(queryNew)
-                    file_path = f"uploads/{monthAndYear}"  # Change the path as needed
-                    with open(file_path, "wb") as server_file:
-                        server_file.write(file.file.read())
+
+                    upload_dir = "/home/ubuntu/var/54.228.253.219/DashboardBack/uploads"
+                    dest = os.path.join(upload_dir,f"{monthAndYear}.xlsx")
+                    print(dest)
+                    with open(dest,"wb") as buffer:
+                        shutil.copyfileobj(file.file,buffer)
+
                 except Exception as e:
                     print("error in entering the month of excel or uploading file in server - ",e)
                     errorMessage =  e
