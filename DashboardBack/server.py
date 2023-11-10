@@ -1900,7 +1900,7 @@ async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: d
             }
     else:
         print("No tunnel_report")
-        return []
+        return ["Hello got some error"]
 
 @app.post("/api/salesForceGraphCompanyTypes")
 async def sales_force_graph_company_types( month : str = Form(...) , year : str = Form(...)):
