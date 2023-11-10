@@ -1811,7 +1811,7 @@ async def get_total_new_joiners_per_mont_by_date( month : str = Form(...) , year
 async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: date = Form(...),endDate: date = Form(...)):
     if tunnel_report:
         data = ""
-        api_url = "http://159.223.225.145/api/upload-excel/findDataTosave"
+        api_url = "http://54.228.253.219/api/upload-excel/findDataTosave"
         startD = startDate.strftime("%Y-%m-%d")
         endD = endDate.strftime("%Y-%m-%d")
         try:
@@ -1872,7 +1872,7 @@ async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: d
             errorMessage = e
         dataAbsentEmails = ""
         table_name_absent_emails = "excel_absent_emails"
-        api_url_absent_emails = "http://159.223.225.145/api/upload-excel/gridAbseneEmails"
+        api_url_absent_emails = "http://54.228.253.219/api/upload-excel/gridAbseneEmails"
         try:
             async with httpx.AsyncClient() as client:
                 response = await client.post(
