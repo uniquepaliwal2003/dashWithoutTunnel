@@ -1156,7 +1156,7 @@ async def upload_excel_grid_absent_emails(file :UploadFile = File(...)):
             }
         else:
             print("No tunnel");
-            return [];
+            return ["Error inside function"];
     except Exception as e:
         print("You got some error :error: ",e)
 @app.post("/api/upload-excel/gridPaye")
