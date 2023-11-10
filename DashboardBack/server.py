@@ -1156,7 +1156,7 @@ async def upload_excel_grid_absent_emails(file :UploadFile = File(...)):
             }
         else:
             print("No tunnel");
-            return ["Error inside function"];
+            return [];
     except Exception as e:
         print("You got some error :error: ",e)
 @app.post("/api/upload-excel/gridPaye")
@@ -1900,7 +1900,7 @@ async def add_data_to_excel_data_table(file: UploadFile = File(...),startDate: d
             }
     else:
         print("No tunnel_report")
-        return ["Hello got some error"]
+        return []
 
 @app.post("/api/salesForceGraphCompanyTypes")
 async def sales_force_graph_company_types( month : str = Form(...) , year : str = Form(...)):
