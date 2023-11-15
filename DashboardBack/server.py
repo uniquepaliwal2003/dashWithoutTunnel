@@ -2106,7 +2106,7 @@ async def sales_force_table_rla_status( month : str = Form(...) , year : str = F
         message = "No Error"
         monthStartDate = year+"-"+month+"-01"
         print(monthStartDate)
-        query=f"""SELECT  first_name ,last_name ,email,date_joined ,CASE WHEN (company_name IS NULL OR company_name = '') THEN 'Not present' ELSE company_name END AS company_name, CASE WHEN company_type = 1 THEN 'PAYE Member' WHEN company_type = 2 THEN 'Director Member' WHEN company_type = 3 THEN 'PLC' ELSE 'Unknown' END AS company_type ,reconciliation_status  FROM  excel_data_input WHERE date_month_excel_date = '{monthStartDate}' AND reconciliation_status IS NOT NULL and month_of_updated_data  = '{dateToQuery}' ;"""
+        query = f"""SELECT file_path path FROM excel_month_exist eme 	WHERE date = '2023-07-01'"""
         try: 
             value = await queryFunction_report(query)
             print(value)
@@ -2123,20 +2123,50 @@ async def sales_force_table_rla_status( month : str = Form(...) , year : str = F
     
     
 @app.post("/api/getAExcelFromServer")
-async def get_a_excel_from_server( ):
+async def get_a_excel_from_server( month : str = Form(...) , year : str = Form(...) ):
     if tunnel_report:
-        request_body = ""
-        try:
-            request_body =await request.json()
-        except Exception as e:
-            print("Error while doing request . json ", e);
+        value=[]
         message = "No Error"
-        print(request_body)
-        # TODO : WRite this api
+        monthStartDate = year+"-"+month+"-01"
+        print(monthStartDate)
+        query=f"""SELECT file_path path FROM excel_month_exist eme 	WHERE date = {monthStartDate} """
+        try: 
+            value = await queryFunction_report(query)
+            print(value)
+        except Exception as e:
+            print("error inside query function",e)
+            message = e
         return { 
-                "Message":message
+                "data":value,
+                "Message":message,
             }
     else:
         print("No tunnel_report")
         return []
     
+@app.post("/api/getTheExcelPresentListByYear")
+async def get_the_excel_present_list_by_year( year:str = Form(...)):
+    if tunnel_report:
+        value=[]
+        message = "No Error"
+        print(year)
+        query=f"""SELECT date FROM excel_month_exist eme WHERE year(date) = {year}  ORDER BY date;"""
+        try: 
+            value = await queryFunction_report(query)
+            print(value)
+        except Exception as e:
+            print("error inside query function",e)
+            message = e
+        return { 
+                "data":value,
+                "Message":message,
+            }
+    else:
+        print("No tunnel_report")
+        return []
+    
+
+
+
+   
+
