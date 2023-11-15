@@ -13,6 +13,8 @@ import requests
 from databaseReport import new_close_mysql_connection,new_connect_to_mysql
 import shutil
 import os
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 conn = None 
@@ -2123,26 +2125,28 @@ async def sales_force_table_rla_status( month : str = Form(...) , year : str = F
     
     
 @app.post("/api/getAExcelFromServer")
-async def get_a_excel_from_server( dateInput :str = Form(...) ):
+async def get_a_excel_from_server(dateInput: str = Form(...)):
     if tunnel_report:
-        value=[]
         message = "No Error"
         monthStartDate = dateInput
-        print(monthStartDate)       
-        query = f"""SELECT file_path  FROM excel_month_exist eme 	WHERE date = '{monthStartDate}' """
-        try: 
-            value = await queryFunction_report(query)
-            print(value)
+        print(monthStartDate)
+        query = f"""SELECT file_path  FROM excel_month_exist eme WHERE date = '{monthStartDate}' """
+        try:
+            data = await queryFunction_report(query)
+            file_path = data[0][0]+".xlsx"
+            print(file_path)
+            if file_path:
+                # Assuming file_path is a string containing the file path
+                return FileResponse(path=file_path, filename=f"{monthStartDate}_report.xlsx")
+            else:
+                message = "File path not found in the database for the given date."
         except Exception as e:
-            print("error inside query function",e)
-            message = e
-        return { 
-                "data":value,
-                "Message":message,
-            }
+            print("Error inside query function", e)
+            message = str(e)
     else:
         print("No tunnel_report")
-        return []
+        message = "No tunnel_report"
+    raise HTTPException(status_code=404, detail=message)
     
 @app.post("/api/getTheExcelPresentListByYear")
 async def get_the_excel_present_list_by_year( year:str = Form(...)):

@@ -65,13 +65,11 @@ async function downloadMyExcelFromServer(date){
         });
         
         if (response.ok) {
-            const dataList = await response.json();
-            console.log(dataList.data[0][0])
-            const a = document.createElement('a');
-            a.href = dataList.data[0][0]
-            document.body.appendChild(a);
-            a.click()
-            document.body.removeChild(a);
+            const dataList = await response.blob();
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'downloaded_file.xlsx';
+            link.click();
         } else {
             console.log("Response not OK:", response.status, response.statusText);
         }
