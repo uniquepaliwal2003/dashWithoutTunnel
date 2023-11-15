@@ -65,7 +65,7 @@ async function downloadMyExcelFromServer(date){
         });
         
         if (response.ok) {
-            const dataList = await response.blob();
+            const blob = await response.blob();
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             link.download = 'downloaded_file.xlsx';
