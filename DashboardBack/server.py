@@ -2128,7 +2128,7 @@ async def get_a_excel_from_server( dateInput :str = Form(...) ):
         value=[]
         message = "No Error"
         monthStartDate = dateInput
-        print(monthStartDateßð)       
+        print(monthStartDate)       
         query = f"""SELECT file_path  FROM excel_month_exist eme 	WHERE date = {monthStartDate} """
         try: 
             value = await queryFunction_report(query)
