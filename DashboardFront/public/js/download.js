@@ -66,8 +66,12 @@ async function downloadMyExcelFromServer(date){
         
         if (response.ok) {
             const dataList = await response.json();
-            console.log(dataList.data)
-           
+            console.log(dataList.data[0][0])
+            const a = document.createElement('a');
+            a.href = dataList.data[0][0]
+            document.body.appendChild(a);
+            a.click()
+            document.body.removeChild(a);
         } else {
             console.log("Response not OK:", response.status, response.statusText);
         }
