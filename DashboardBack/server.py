@@ -2123,11 +2123,11 @@ async def sales_force_table_rla_status( month : str = Form(...) , year : str = F
     
     
 @app.post("/api/getAExcelFromServer")
-async def get_a_excel_from_server( month : str = Form(...) , year : str = Form(...) ):
+async def get_a_excel_from_server( date :str = Form(...) ):
     if tunnel_report:
         value=[]
         message = "No Error"
-        monthStartDate = year+"-"+month+"-01"
+        monthStartDate = date
         print(monthStartDate)       
         query = f"""SELECT file_path path FROM excel_month_exist eme 	WHERE date = {monthStartDate} """
         try: 
