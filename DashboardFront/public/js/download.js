@@ -57,7 +57,7 @@ function getMonthAndYearFromDate(inputDate) {
 
 async function downloadMyExcelFromServer(date){
     const formData = new FormData();
-    formData.append('monthDate',date);
+    formData.append('dateInput',date);
     try {
         const response = await fetch(`http://${port}/api/getAExcelFromServer`, {
             method: 'POST',
