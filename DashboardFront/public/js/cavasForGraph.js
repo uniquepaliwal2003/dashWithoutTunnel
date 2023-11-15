@@ -106,7 +106,7 @@ async function makeCanvasForCompanyType(){
                                 <div class="card-header">
                                     <div class="row justify-content-center">
                                         <div class="col-10 d-flex justify-content-center">
-                                            <h5 class="d-inline">Contractor Type</h5>
+                                            <h5 class="d-inline">Company Type</h5>
                                         </div>
                                         <div class="col-2">
                                             <button class="btn btn-primary btnCompanyType btn-sm" id="btnCompanyType" onclick="showTableCompanyType()" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
@@ -180,10 +180,10 @@ async function makeCanvasForActivepassiveContractors(formData,date){
                                             <h5 class="d-inline">Contractor Type</h5>
                                         </div>
                                         <div class="col-4 row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                     <input onchange="makeGraphforActivePassiveContractorsDummy()" type="date" id="btnstartdateActivePassiveCon" value="${date}" min="${date}">
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                      <input onchange="makeGraphforActivePassiveContractorsDummy()" type="date" id="enddateActivePassiveCon" value="${dateEnd}">
                                             </div>
                                         </div>
@@ -342,10 +342,10 @@ async function makeCanvasForforRlaStatus(formData,date){
                                             <h5 class="d-inline">Reconciliation Status </h5>
                                         </div>
                                         <div class="col-4 row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                 <input onchange="makeGraphforrlaStatusDummy()" type="date" id="startdateRlaStatus" value="${date}" min="${date}">
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                 <input onchange="makeGraphforrlaStatusDummy()" type="date" id="enddateRlaStatus" value="${dateEnd}">
                                             </div>
                                         </div>
