@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-# openpyxl
+openpyxl
 python-multipart
 pandas
 pandas

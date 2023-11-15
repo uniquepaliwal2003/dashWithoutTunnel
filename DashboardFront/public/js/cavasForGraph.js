@@ -53,10 +53,10 @@ async function makeCanvasForGraphEmails(){
                              <div class="card">
                                 <div class="card-header">
                                     <div class="row justify-content-center">
-                                        <div class="col-9 d-flex justify-content-center">
+                                        <div class="col-10 d-flex justify-content-center">
                                             <h5 class="d-inline">Portal Emails</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             <button class="btn btn-primary btnTableEmail btn-sm" id="btnTableEmail" onclick="showTableEmails()" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
                                         </div>
                                     </div>
@@ -105,10 +105,10 @@ async function makeCanvasForCompanyType(){
                              <div class="card">
                                 <div class="card-header">
                                     <div class="row justify-content-center">
-                                        <div class="col-9 d-flex justify-content-center">
+                                        <div class="col-10 d-flex justify-content-center">
                                             <h5 class="d-inline">Contractor Type</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             <button class="btn btn-primary btnCompanyType btn-sm" id="btnCompanyType" onclick="showTableCompanyType()" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
                                         </div>
                                     </div>
@@ -176,14 +176,14 @@ async function makeCanvasForActivepassiveContractors(formData,date){
                              <div class="card">
                                 <div class="card-header">
                                     <div class="row justify-content-center">
-                                        <div class="col-6 d-flex justify-content-center">
+                                        <div class="col-7 d-flex justify-content-center">
                                             <h5 class="d-inline">Contractor Type</h5>
                                         </div>
-                                        <div class="col-5 row">
-                                            <div class="col-6">
+                                        <div class="col-4 row">
+                                            <div class="col-12">
                                                     <input onchange="makeGraphforActivePassiveContractorsDummy()" type="date" id="btnstartdateActivePassiveCon" value="${date}" min="${date}">
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                      <input onchange="makeGraphforActivePassiveContractorsDummy()" type="date" id="enddateActivePassiveCon" value="${dateEnd}">
                                             </div>
                                         </div>
@@ -254,31 +254,31 @@ async function makeGraphFromActivepassiveContractors(dataList , dateForFinding){
     labels: keys.map(data => formatDateToMonthYear(data)),
     datasets: [
       {
-        label: 0,
+        label: "Inactive",
         data: keys.map(data=>chartD[data][0]),
         backgroundColor: "#146C94",
         borderWidth: 2,
       },
       {
-        label: 6,
+        label: "Limited Inactive",
         data: keys.map(data=>chartD[data][1]),
         backgroundColor: "#279EFF",
         borderWidth: 1,
       },
       {
-        label: 8,
+        label: "Limited Active",
         data: keys.map(data=>chartD[data][2]),
         backgroundColor: "#AFD3E2",
         borderWidth: 1,
       },
       {
-        label: 9,
+        label: "Pending",
         data: keys.map(data=>chartD[data][3]),
         backgroundColor: "#AFD3E2",
         borderWidth: 1,
       },
       {
-        label: 10,
+        label: "Active",
         data: keys.map(data=>chartD[data][4]),
         backgroundColor: "#AFD3E2",
         borderWidth: 1,
@@ -338,14 +338,14 @@ async function makeCanvasForforRlaStatus(formData,date){
                              <div class="card">
                                 <div class="card-header">
                                     <div class="row justify-content-center">
-                                        <div class="col-6 d-flex justify-content-center">
+                                        <div class="col-7 d-flex justify-content-center">
                                             <h5 class="d-inline">Reconciliation Status </h5>
                                         </div>
-                                        <div class="col-5 row">
-                                            <div class="col-6">
+                                        <div class="col-4 row">
+                                            <div class="col-12">
                                                 <input onchange="makeGraphforrlaStatusDummy()" type="date" id="startdateRlaStatus" value="${date}" min="${date}">
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 <input onchange="makeGraphforrlaStatusDummy()" type="date" id="enddateRlaStatus" value="${dateEnd}">
                                             </div>
                                         </div>
@@ -411,7 +411,7 @@ async function makeGraphFromforRlaStatus(dataList ,dateForFinding){
             borderWidth: 2,
           },
           {
-            label: 3,
+            label: "Reconcilied",
             data: keys.map(data=>chartD[data][1]),
             backgroundColor: "#279EFF",
             borderWidth: 1,
