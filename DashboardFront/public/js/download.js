@@ -26,11 +26,13 @@ submitButtonYearDownload.addEventListener('submit',async (e)=>{
                                             </tr>
                                         </thead>
                                         <tbody>`
-                for( let i = 0 ; i < dataList.data[0].length ; i++ ){
+                console.log(dataList.data.length)
+                for( let i = 0 ; i < dataList.data.length ; i++ ){
+                    console.log(i)
                     tableHtml += `<tr>
                                      <td>${i+1}</td>
-                                     <td>${getMonthAndYearFromDate(dataList.data[0][i])}</td>
-                                     <td><button class="btn btn-sm btn-outline-primary" onclick="downloadMyExcelFromServer(this.id)" id="${dataList.data[0][i]}" >Download</button></td>
+                                     <td>${getMonthAndYearFromDate(dataList.data[i][0])}</td>
+                                     <td><button class="btn btn-sm btn-outline-primary" onclick="downloadMyExcelFromServer(this.id)" id="${dataList.data[i][0]}" >Download</button></td>
                                      </tr>`
                 }
                 tableHtml +=  `</tbody>
