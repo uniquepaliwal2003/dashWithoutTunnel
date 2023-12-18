@@ -575,7 +575,7 @@ async def get_plc_contractor_paid_per_account_manager(start:date,end:date,id:str
     if tunnel:
         value=[]
         query_date_range = f"'{start}' AND '{end}'"
-        query=f"""SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS month, COUNT(distinct client_id) AS unique_contractor_paid FROM    reconciliation_reconciliation rr  left join client_userclient as cuc on rr.client_id = cuc.id WHERE invoice_date  between {query_date_range} AND cuc.company_type  LIKE 3 AND account_manager_id ={id} AND rr.status LIKE 3  GROUP BY DATE_FORMAT(invoice_date, '%Y-%m') ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') ASC;"""
+        query=f"""SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS month, COUNT(distinct client_id) AS unique_contractor_paid FROM    reconciliation_reconciliation rr  left join client_userclient as cuc on rr.client_id = cuc.id WHERE invoice_date  between {query_date_range} AND cuc.company_type  LIKE 3 AND account_manager_id ='{id}' AND rr.status LIKE 3  GROUP BY DATE_FORMAT(invoice_date, '%Y-%m') ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') ASC;"""
         try:
             value =await queryFunction(query)
         except Exception as e:

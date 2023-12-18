@@ -36,6 +36,7 @@ let myChartTotalUniquepaidpermonth;
 let myChartManagementDeducted;
 let myChartTotalContractorNotPaid;
 let myChartwithinTwoMon;
+let myChartTotalPlcPaidPerAccountManager;
 
 // First graph for active , pending and all.
 async function userByMonth() {
@@ -497,6 +498,63 @@ async function totalUniqueContratorPaidPerMonth() {
 }
 totalUniqueContratorPaidPerMonth();
 
+// get plc contractor per manager.
+async function getPlcContractorPaidPerAccountManager(){
+  dataList = "";
+  const selectElement = document.getElementById('selectForAccountManager'); // Replace 'yourSelectId' with your actual select element's ID
+
+if (selectElement.childElementCount <= 0) {
+  await getManagerForOptionsInPlcPerManager()
+} 
+
+  const startDate = document.getElementById("startDatePlcPaidPerAccoundManager").value;
+  const endDate = document.getElementById("endDatePlcPaidPerAccoundManager").value;
+  const stringId = document.getElementById("selectForAccountManager").value;
+  const apiUrl = `http://${port}/api/getplcContractorPaidPerAccountManager?start=${startDate}&end=${endDate}&id=${stringId}`;
+  await fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((d) => {
+      dataList = d.data;
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  const chrt = document
+    .getElementById("TotalPlcPaiPerAccountmanager")
+    .getContext("2d");
+  if (myChartTotalPlcPaidPerAccountManager) {
+    myChartTotalPlcPaidPerAccountManager.destroy();
+  }
+  myChartTotalPlcPaidPerAccountManager = new Chart(chrt, {
+    type: "bar",
+    data: {
+      labels: dataList.data.map((item) => formatDateToMonthYear(item[0])),
+      datasets: [
+        {
+          label: "Contractors",
+          data: dataList.data.map((item) => item[1]),
+          backgroundColor: "#279EFF",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      },
+    },
+  });
+}
+getPlcContractorPaidPerAccountManager();
+
 //bar chart for total unique contractors paid per month
 async function getManagerForOptionsInPlcPerManager() {
   dataList = "";
@@ -516,14 +574,12 @@ async function getManagerForOptionsInPlcPerManager() {
     });
     let select = document.getElementById("selectForAccountManager");
     dataList.forEach(element => {
-      console.log(element[0])
       let newOption = document.createElement("option");
       newOption.value = element[0]; // Set the value attribute
       newOption.text = `${element[2]} ${element[3]}`; // Set the text content
       select.appendChild(newOption);
     });
 }
-getManagerForOptionsInPlcPerManager();
 
 //Bar chart for total management fees each month
 async function totalManagementFeesDeducted() {
