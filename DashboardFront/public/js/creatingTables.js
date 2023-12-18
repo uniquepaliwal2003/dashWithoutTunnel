@@ -873,7 +873,7 @@ async function totalPlcPerAccountManager() {
   } 
   const startDate = document.getElementById("startdatePlcPerAccountManager").value;
   const endDate = document.getElementById("enddatePlcPerAccountManager").value;
-  const stringId = document.getElementById("selectForAccountManager").value;
+  const stringId = document.getElementById("selectForAccountManagerTable").value;
   const apiUrl = `http://${port}/api/getTotalPlcPaidPerManagerTable?start=${startDate}&end=${endDate}&id=${stringId}`;
   await fetch(apiUrl)
     .then((response) => {
