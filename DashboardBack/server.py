@@ -546,10 +546,10 @@ async def get_missing_docs_bar_table_agency(start:date,end:date):
             print("error inside query function",e)
         return {
                 "data":value1,
-            };
+            }
     else:
-        print("No tunnel");
-        return [];
+        print("No tunnel")
+        return []
 
 #bar chart for total unique contractors paid per month
 @app.get("/api/getTotalUniqueContratorPaidPerMonth")
@@ -559,15 +559,50 @@ async def get_total_unique_contrator_paid_per_month(start:date,end:date):
         query_date_range = f"'{start}' AND '{end}'"
         query=f"""SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS month, COUNT(distinct client_id) AS unique_contractor_paid FROM    reconciliation_reconciliation rr  left join client_userclient as cuc on rr.client_id = cuc.id WHERE invoice_date  between {query_date_range} AND cuc.company_type NOT LIKE 3 AND rr.status LIKE 3  GROUP BY DATE_FORMAT(invoice_date, '%Y-%m') ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') ASC;"""
         try:
-            value =await queryFunction(query);
+            value =await queryFunction(query)
         except Exception as e:
             print("error inside query function",e)
         return {
                 "data":value,
-            };
+            }
     else:
-        print("No tunnel");
-        return [];
+        print("No tunnel")
+        return []
+
+#bar chart for total plc contractor paid per account manager.
+@app.get("/api/getplcContractorPaidPerAccountManager")
+async def get_plc_contractor_paid_per_account_manager(start:date,end:date,id:str):
+    if tunnel:
+        value=[]
+        query_date_range = f"'{start}' AND '{end}'"
+        query=f""" """
+        try:
+            value =await queryFunction(query)
+        except Exception as e:
+            print("error inside query function",e)
+        return {
+                "data":value,
+            }
+    else:
+        print("No tunnel")
+        return []
+    
+#getting list of all the account manager.
+@app.get("/api/getListOfAccountManager")
+async def get_list_of_account_manager():
+    if tunnel:
+        value=[]
+        query=f"""SELECT account_manager_id , cu2.user_id ,first_name ,last_name FROM client_userclient cu LEFT JOIN client_usermanager AS cu2 ON cu.account_manager_id = cu2.id  LEFT JOIN autho_user AS au ON cu2.user_id = au.id WHERE company_type = 3 AND Account_manager_id IS NOT NULL GROUP BY account_manager_id , cu2.user_id ,first_name ,last_name ORDER BY first_name ;"""
+        try:
+            value =await queryFunction(query)
+        except Exception as e:
+            print("error inside query function",e)
+        return {
+                "data":value,
+            }
+    else:
+        print("No tunnel")
+        return []
 
 @app.get("/api/getTotalUniqueContratorPaidPerMonthTable")
 async def get_total_unique_contrator_paid_per_month_table(start:date,end:date):
@@ -576,15 +611,15 @@ async def get_total_unique_contrator_paid_per_month_table(start:date,end:date):
         query_date_range = f"'{start}' AND '{end}'"
         query=f"""SELECT distinct rr.client_id ,first_name, last_name,email,date_joined, CASE WHEN (company IS NULL OR company = '') THEN 'Not present' ELSE company END AS company ,CASE WHEN company_type = 1 THEN 'PAYE Member' WHEN company_type = 2 THEN 'Director Member' WHEN company_type = 3 THEN 'PLC' ELSE 'Unknown' END AS company_type , DATE_FORMAT(invoice_date, '%Y-%m') AS month  FROM    reconciliation_reconciliation rr left join client_userclient as cuc on rr.client_id = cuc.id Left join autho_user as au on cuc.user_id = au.id  WHERE cuc.company_type NOT LIKE 3 AND rr.status LIKE 3 and invoice_date between {query_date_range} ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') desc;"""
         try:
-            value =await queryFunction(query);
+            value =await queryFunction(query)
         except Exception as e:
             print("error inside query function",e)
         return {
                 "data":value,
-            };
+            }
     else:
-        print("No tunnel");
-        return [];
+        print("No tunnel")
+        return []
 
 #Bar chart for total management fees each month
 @app.get("/api/getTotalManagementFeesDeducted")
@@ -633,15 +668,15 @@ async def get_all_document_recieved_table_two(start:date,end:date):
         query_date_range = f"'{start}' AND '{end}'"
         query1=f""" WITH ExcludedClients AS (SELECT client_id FROM (SELECT GROUP_CONCAT(DISTINCT dd.doc_type) as docs, client_id FROM documents_document dd INNER JOIN client_userclient cu ON dd.client_id = cu.id LEFT JOIN autho_user au ON cu.user_id = au.id WHERE date_joined between {query_date_range} AND company_type NOT LIKE '3' GROUP BY client_id HAVING docs LIKE '%,12,%' OR (docs LIKE '%,5,%' AND docs LIKE '%,6,%') AND docs LIKE '%,7,%' AND docs LIKE '%,28,%' AND docs LIKE '%,25,%' ORDER BY client_id ASC) x) SELECT cc.id as client_id, first_name, last_name, date_joined, monthname(date_joined) as month, CASE WHEN (cc.company IS NULL OR cc.company = '') THEN 'Not present' ELSE cc.company END AS company, CASE WHEN cc.company_type = 1 THEN 'PAYE Member' WHEN cc.company_type = 2 THEN 'Director Member' WHEN cc.company_type = 3 THEN 'PLC' ELSE 'Unknown' END AS company_type,email FROM autho_user au LEFT JOIN client_userclient as cc ON au.id = cc.user_id WHERE cc.company_type NOT LIKE '3' AND date_joined between {query_date_range} AND cc.id NOT IN (SELECT client_id FROM ExcludedClients) ORDER BY MONTH(date_joined) DESC;"""
         try:
-            value1 =await queryFunction(query1);
+            value1 =await queryFunction(query1)
         except Exception as e:
             print("error inside query function",e)
         return {
                 "table2":value1
-            };
+            }
     else:
-        print("No tunnel");
-        return [];
+        print("No tunnel")
+        return []
 
 
 #Circle for Total contractor with no management fees dedecuted
@@ -672,15 +707,15 @@ async def get_total_contractor_with_no_management_fees_deducted_table(start:date
 (SELECT client_id FROM reconciliation_reconciliation where status LIKE '3' and  invoice_date between {query_date_range}  GROUP BY client_id HAVING SUM(management_fee) > 0) ;
 """
         try:
-            value =await queryFunction(query);
+            value =await queryFunction(query)
         except Exception as e:
             print("error inside query function",e)
         return {
                 "data":value,
-            };
+            }
     else:
-        print("No tunnel");
-        return [];
+        print("No tunnel")
+        return []
 
 
 
@@ -719,7 +754,7 @@ async def get_total_contractor_not_paid_table(start:date,end:date):
     LEFT JOIN reconciliation_reconciliation rr ON cu.id = rr.client_id
     WHERE date_joined between {query_date_range} AND invoice_date IS NULL and company_type not like '3'; """
         try:
-            value =await queryFunction(query);
+            value =await queryFunction(query)
         except Exception as e:
             print("error inside query function",e)
         return {

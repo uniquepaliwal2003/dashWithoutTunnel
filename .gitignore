@@ -3,3 +3,4 @@ DashboardBack/venv
 DashboardFront/node_modules
 *.log
 DashboardBack/uploads
+*.pdf

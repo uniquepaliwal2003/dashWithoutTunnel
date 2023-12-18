@@ -225,30 +225,6 @@
           </div>
         </div>
         <div class="row container-fluid justify-content-center">
-          <!--  Total unique contractors paid each month -->
-          <!--  Total contractors with missing info before contract start date.
-                Total contractors with missing info after contract start date. -->
-          <!-- <div class="col-xl-4 col-lg-4 col-md-8 col-12 mb-3 justify-content-center"> -->
-            <!-- <div class="card">
-              <div class="card-header">
-                <div class="row">
-                  <div class="col d-flex justify-content-center">
-                    <h5 class="d-inline">Missing Information</h5>
-                    <input onchange="ChartWithMissingInfoBeforeContractStart()" type="date" id="startdateMissingDoc" value="2023-01-01">
-                    <input onchange="ChartWithMissingInfoBeforeContractStart()" type="date" id="enddateUserMissingDoc" value="2023-12-31">
-                  </div>
-                  <div class="col-auto">
-                    <button class="btn btn-primary btnUserByMonthMissInfo" id="btnUserByMonthMissInfo" style="background-color:rgba(2, 90, 190, 0.678)">Table</button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body d-flex justify-content-center align-items-center">
-                <canvas id="TotalContractorsWithMissInfoBeforeAndAfter" height="300px"></canvas>
-              </div>
-            </div> -->
-          <!-- </div> -->
-          <!-- total unique contractors paid each month -->
-
           <div class="col-xl-4 col-lg-4 col-md-12 col-12 mb-3">
             <div class="card">
             <div class="card-header text-center">
@@ -259,7 +235,7 @@
                 <div class="col-auto">
                   <input onchange="totalManagementFeesDeducted()" type="date" id="startDatetotalManagement" value="2023-01-01" class="d-inline startDateRange">
                 </div>
-                <div class="col-3">
+                <div class="col-auto mt-1">
                   <input onchange="totalManagementFeesDeducted()" type="date" id="endDatetotalManagement" value="2023-12-31" class="d-inline endDateRange">
                 </div>
               </div>
@@ -277,13 +253,13 @@
                   <div class="col-auto">
                     <h5 class="d-inline">Total Unique Contractor Paid/Month Umbrella</h5>
                   </div>
+                </div>
+                <div class="col-auto row mt-2">
+                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="startdatePaid/Month" value="2023-01-01" class="d-inline startDateRange col-auto mr-2">
+                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="enddatePaid/Month" value="2023-12-31" class="d-inline endDateRange col-auto">
                   <div class="col-auto">
                     <button class="btn btn-primary btn-sm btnUserByMonthUnique" id="btnUserByMonthUnique" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
                   </div>
-                </div>
-                <div class="col-auto">
-                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="startdatePaid/Month" value="2023-01-01" class="d-inline startDateRange">
-                  <input onchange="totalUniqueContratorPaidPerMonth()" type="date" id="enddatePaid/Month" value="2023-12-31" class="d-inline endDateRange">
                 </div>
               </div>
             </div>
@@ -292,9 +268,39 @@
             </div>
           </div>
         </div>
-        <div class="row container-fluid justify-content-center">
-          <!-- Total management fees each month -->
-
+          </div>
+          <div class="row container-fluid justify-content-center">
+            <div class="col-xl-10 col-lg-10 col-md-12 col-12 mb-3">
+              <div class="card">
+                <div class="card-header text-center">
+                  <div class="row justify-content-center">
+                    <div class="col-auto">
+                     <h5>Plc contractors paid/account manager</h5>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-primary btn-sm btnUserByMonthUnique" id="btnUserByMonthUnique" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                  <div class="col-auto">
+                    <input onchange="totalPlcPaidPerAccoundManager()" type="date" id="startDatePlcPaidPerAccoundManager" value="2023-01-01" class="d-inline startDateRange">
+                  </div>
+                  <div class="col-auto">
+                    <input onchange="totalPlcPaidPerAccoundManager()" type="date" id="endDatePlcPaidPerAccoundManager" value="2023-12-31" class="d-inline endDateRange">
+                  </div>
+                  <div class="col-auto">
+                    <select id="textInput" onchange="totalPlcPaidPerAccoundManager()" >
+                      <option value="" disabled selected>Select Account Manager</option>
+                      <option value="input1">Hristina Dordevic</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <canvas id="TotalPlcPaiPerAccountmanager" height="302px"></canvas>
+              </div>
+              </div>
+            </div>
           </div>
           <!-- Total contractors with no management fees deducted. 
           -->
