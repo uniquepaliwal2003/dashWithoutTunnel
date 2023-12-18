@@ -524,6 +524,14 @@ if (selectElement.childElementCount <= 0) {
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);
     });
+    let labelAdder = "Contractors"
+    if( dataList.length === 0 ){
+      // if (myChartTotalPlcPaidPerAccountManager) {
+      //   myChartTotalPlcPaidPerAccountManager.destroy();
+      // }
+      // return;
+      labelAdder = "No Data To Show"
+    }
   const chrt = document
     .getElementById("TotalPlcPaiPerAccountmanager")
     .getContext("2d");
@@ -533,11 +541,11 @@ if (selectElement.childElementCount <= 0) {
   myChartTotalPlcPaidPerAccountManager = new Chart(chrt, {
     type: "bar",
     data: {
-      labels: dataList.data.map((item) => formatDateToMonthYear(item[0])),
+      labels: dataList.map((item) => formatDateToMonthYear(item[0])),
       datasets: [
         {
-          label: "Contractors",
-          data: dataList.data.map((item) => item[1]),
+          label: labelAdder,
+          data: dataList.map((item) => item[1]),
           backgroundColor: "#279EFF",
           borderWidth: 1,
         },

@@ -278,18 +278,18 @@
                      <h5>Plc contractors paid/account manager</h5>
                     </div>
                     <div class="col-auto">
-                      <button class="btn btn-primary btn-sm btnUserByMonthUnique" id="btnUserByMonthUnique" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
+                      <button class="btn btn-primary btn-sm btnPlcContractorsPaidPerMonth" id="btnPlcContractorsPaidPerMonth" style="background-color:rgba(2, 90, 190, 0.678)">TABLE</button>
                     </div>
                   </div>
                   <div class="row justify-content-center">
                   <div class="col-auto">
-                    <input onchange="totalPlcPaidPerAccoundManager()" type="date" id="startDatePlcPaidPerAccoundManager" value="2023-01-01" class="d-inline startDateRange">
+                    <input onchange="getPlcContractorPaidPerAccountManager()" type="date" id="startDatePlcPaidPerAccoundManager" value="2023-01-01" class="d-inline startDateRange">
                   </div>
                   <div class="col-auto">
-                    <input onchange="totalPlcPaidPerAccoundManager()" type="date" id="endDatePlcPaidPerAccoundManager" value="2023-12-31" class="d-inline endDateRange">
+                    <input onchange="getPlcContractorPaidPerAccountManager()" type="date" id="endDatePlcPaidPerAccoundManager" value="2023-12-31" class="d-inline endDateRange">
                   </div>
                   <div class="col-auto">
-                    <select id="selectForAccountManager" onchange="totalPlcPaidPerAccoundManager()" >
+                    <select id="selectForAccountManager" onchange="getPlcContractorPaidPerAccountManager()" >
                       
                     </select>
                   </div>
@@ -446,7 +446,7 @@
         </div>
       </div> -->
       </div>
-      </div>
+ 
       <div> 
 
       
@@ -670,6 +670,31 @@
           </div>
           <div id="myGridUserAllUnique" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
         </div>
+        <!-- plc  per account manager -->
+        <div class="showingIt" id="TableContainerPlcPerAccountManager">
+          <button class="btn btn-secondary" id="BackMainContentPlcPerAccountManager">Back</button>
+          <h5 class="mt-3 mb-3">Plc Contractor Per Account Manager-</h5>
+          <div class="row">
+            <div class="col-2">
+              <div>Start date- </div>
+              <input class="mb-3 startDateRange" onchange="totalPlcPerAccountManager()" type="date" id="startdatePlcPerAccountManager" value="2023-01-01">
+            </div>
+            <div class="col-2">
+              <div>End date-</div>
+              <input class="mb-3 endDateRange" onchange="totalPlcPerAccountManager()" type="date" id="enddatePlcPerAccountManager" value="2023-12-31">
+            </div>
+            <div class="col-3">
+              <div>Account Manager-</div>
+              <select id="selectForAccountManagerTable" onchange="totalPlcPerAccountManager()" >
+                      
+              </select>
+            </div>
+            <div class="col-5 text-right">
+              <button class="btn btn-primary btn-sm" onclick="onExportClickExportmyGridPlcPerAccountManager()">Export</button>
+            </div>
+          </div>
+          <div id="myGridUserAllPlcPerAccountManager" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
+        </div>
         <!-- No Management Fees -->
         <div class="showingIt" id="TableContainerNoMagF">
           <button class="btn btn-secondary" id="BackMainContentNoMagF">Back</button>
@@ -729,6 +754,7 @@
           </div>
           <div id="myGridUserAllMonInvo" style="height: 1150px; width:100%;" class="ag-theme-alpine"></div>
         </div>
+      </div>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

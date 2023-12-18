@@ -155,3 +155,18 @@ BackMainContentMonInvo.addEventListener('click',function(){
     mainWrapper.classList.toggle('showingIt');   
     TableContainerMonInvo.classList.toggle('showingIt');   
 })
+// plc contractor paid per month
+btnPlcContractorsPaidPerMonth = document.getElementById("btnPlcContractorsPaidPerMonth");
+TableContainerPlcPerAccountManager = document.getElementById("TableContainerPlcPerAccountManager");
+BackMainContentPlcPerAccountManager = document.getElementById("BackMainContentPlcPerAccountManager");
+btnPlcContractorsPaidPerMonth.addEventListener('click', function() {
+    // Toggle the 'active' class on the button
+    mainWrapper.classList.toggle('showingIt');
+    TableContainerPlcPerAccountManager.classList.toggle('showingIt');
+    if(!myGridUserAllPlcPerAccountManager)
+        totalPlcPerAccountManager();
+});
+BackMainContentPlcPerAccountManager.addEventListener('click',function(){
+    mainWrapper.classList.toggle('showingIt');   
+    TableContainerPlcPerAccountManager.classList.toggle('showingIt');   
+})

@@ -620,6 +620,23 @@ async def get_total_unique_contrator_paid_per_month_table(start:date,end:date):
     else:
         print("No tunnel")
         return []
+    
+@app.get("/api/getTotalPlcPaidPerManagerTable")
+async def get_total_plc_paid_per_account_manager_table(start:date,end:date,id:str):
+    if tunnel:
+        value=[]
+        query_date_range = f"'{start}' AND '{end}'"
+        query=f"""SELECT distinct rr.client_id ,first_name, last_name,email,date_joined, CASE WHEN (company IS NULL OR company = '') THEN 'Not present' ELSE company END AS company ,CASE WHEN company_type = 1 THEN 'PAYE Member' WHEN company_type = 2 THEN 'Director Member' WHEN company_type = 3 THEN 'PLC' ELSE 'Unknown' END AS company_type , DATE_FORMAT(invoice_date, '%Y-%m') AS month  FROM    reconciliation_reconciliation rr left join client_userclient as cuc on rr.client_id = cuc.id Left join autho_user as au on cuc.user_id = au.id  WHERE cuc.company_type LIKE 3 AND rr.status LIKE 3 and invoice_date between {query_date_range} AND account_manager_id ='{id}' ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') desc;"""
+        try:
+            value =await queryFunction(query)
+        except Exception as e:
+            print("error inside query function",e)
+        return {
+                "data":value,
+            }
+    else:
+        print("No tunnel")
+        return []
 
 #Bar chart for total management fees each month
 @app.get("/api/getTotalManagementFeesDeducted")

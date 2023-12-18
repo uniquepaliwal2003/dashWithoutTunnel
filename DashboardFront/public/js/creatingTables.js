@@ -39,6 +39,7 @@ let myGridAllConPaid = "";
 let myGridstartTwoTwo = "";
 let myGridStartOne = "";
 let myGridUserAllMonInvo = "";
+let myGridUserAllPlcPerAccountManager = "";
 // 
 let ExportmyUserByMonthGrid;
 const onGridReadyExportmyUserByMonthGrid = params=>{
@@ -143,6 +144,14 @@ const onGridReadyExportmyGridUserAllMonInvo = params=>{
 }
 const onExportClickExportmyGridUserAllMonInvo=()=>{
   ExportmyGridUserAllMonInvo.exportDataAsCsv();
+}
+//
+let ExportmyGridPlcPerAccountManager;
+const onGridReadyExportymGridPlcPerAccountManager = params=>{
+  ExportmyGridPlcPerAccountManager = params.api;
+}
+const onExportClickExportmyGridPlcPerAccountManager=()=>{
+  ExportmyGridPlcPerAccountManager.exportDataAsCsv();
 }
 
 async function userByMonthTable() {
@@ -856,6 +865,96 @@ async function UniqueConPerMontPerMonthUmbrella() {
   myGridUniqueconPer = gridOptionstable1.api;
 }
 
+async function totalPlcPerAccountManager() {
+  dataList = "";
+  const selectElement = document.getElementById('selectForAccountManagerTable'); 
+  if (selectElement.childElementCount <= 0) {
+    await getManagerForOptionsInPlcPerManagerTable()
+  } 
+  const startDate = document.getElementById("startdatePlcPerAccountManager").value;
+  const endDate = document.getElementById("enddatePlcPerAccountManager").value;
+  const stringId = document.getElementById("selectForAccountManager").value;
+  const apiUrl = `http://${port}/api/getTotalPlcPaidPerManagerTable?start=${startDate}&end=${endDate}&id=${stringId}`;
+  await fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((d) => {
+      dataList = d;
+      // console.log(d);
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+  //TAble 01
+  const columnDefs = [
+    { field: "Name", filter: true ,flex:1},
+    { field: "Email", filter: true ,flex:1},
+    { field: "ContractorDateJoined", filter: true ,flex:1},
+    { field: "Company", filter: true ,flex:1},
+    { field: "CompanyType", filter: true ,flex:1},
+    { field: "MonthOfInvoice",filter:true,flex:1}
+  ];
+
+  function dataforrow(dataList) {
+    const hello = dataList.map((entry) => ({
+      Name: `${entry[1]} ${entry[2]}`,
+      Email: entry[3],
+      ContractorDateJoined: new Date(entry[4]),
+      Company: entry[5],
+      CompanyType: entry[6],
+      MonthOfInvoice:entry[7]
+    }));
+    return hello; // Return the mapped data
+  }
+  // specify the data
+  const rowDataAll = dataforrow(dataList["data"]);
+
+  // let the grid know which columns and what data to use
+  const gridOptionstable1 = {
+    columnDefs: columnDefs,
+    rowData: rowDataAll,
+    pagination: true,
+    animateRows: true,
+    paginationPageSize: 25,
+    onGridReady: onGridReadyExportymGridPlcPerAccountManager
+  };
+  if (myGridUserAllPlcPerAccountManager) {
+    myGridUserAllPlcPerAccountManager.destroy();
+  }
+  // setup the grid after the page has finished loading
+  const gridDiv = document.querySelector("#myGridUserAllPlcPerAccountManager");
+  myGridUserAllPlcPerAccountManager = new agGrid.Grid(gridDiv, gridOptionstable1);
+  myGridUserAllPlcPerAccountManager = gridOptionstable1.api;
+}
+
+async function getManagerForOptionsInPlcPerManagerTable() {
+  dataList = "";
+  const apiUrl = `http://${port}/api/getListOfAccountManager`;
+  await fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((d) => {
+      dataList = d.data;
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+    let select = document.getElementById("selectForAccountManagerTable");
+    dataList.forEach(element => {
+      let newOption = document.createElement("option");
+      newOption.value = element[0]; // Set the value attribute
+      newOption.text = `${element[2]} ${element[3]}`; // Set the text content
+      select.appendChild(newOption);
+    });
+}
 
 async function contractorsWithNoManagementFeesDeducted() {
   dataList = "";
