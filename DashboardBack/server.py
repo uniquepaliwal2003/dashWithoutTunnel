@@ -541,7 +541,7 @@ async def get_missing_docs_bar_table_agency(start:date,end:date):
         query_date_range = f"'{start}' AND '{end}'"
         query1=f"""SELECT DISTINCT client_id ,first_name,last_name,email,date_joined,CASE WHEN (company IS NULL OR company = '') THEN 'Not present' ELSE company END AS company, CASE WHEN company_type = 1 THEN 'PAYE Member' WHEN company_type = 2 THEN 'Director Member' WHEN company_type = 3 THEN 'PLC' ELSE 'Unknown' END AS company_type FROM documents_document as dd LEFT JOIN client_userclient AS cuc ON dd.client_id = cuc.id LEFT JOIN autho_user AS au ON cuc.user_id = au.id WHERE date_joined between {query_date_range} and  doc_type IN (11, 14, 17, 29) AND client_id NOT IN ( SELECT DISTINCT client_id FROM documents_document WHERE doc_type = 7 ) order by date_joined desc;"""
         try:
-            value1 =await queryFunction(query1);
+            value1 =await queryFunction(query1)
         except Exception as e:
             print("error inside query function",e)
         return {
@@ -575,7 +575,7 @@ async def get_plc_contractor_paid_per_account_manager(start:date,end:date,id:str
     if tunnel:
         value=[]
         query_date_range = f"'{start}' AND '{end}'"
-        query=f""" """
+        query=f"""SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS month, COUNT(distinct client_id) AS unique_contractor_paid FROM    reconciliation_reconciliation rr  left join client_userclient as cuc on rr.client_id = cuc.id WHERE invoice_date  between {query_date_range} AND cuc.company_type  LIKE 3 AND account_manager_id ={id} AND rr.status LIKE 3  GROUP BY DATE_FORMAT(invoice_date, '%Y-%m') ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') ASC;"""
         try:
             value =await queryFunction(query)
         except Exception as e:
@@ -629,7 +629,7 @@ async def get_total_management_fees_deducted(start:date,end:date):
         query_date_range = f"'{start}' AND '{end}'"
         query=f"""SELECT DATE_FORMAT(invoice_date, '%Y-%m') AS month_year, DATE_FORMAT(invoice_date, '%M %Y') AS month_name, SUM(management_fee) AS management_fee FROM reconciliation_reconciliation rr left join client_userclient as cuc on rr.client_id = cuc.id WHERE rr.status LIKE 3 and invoice_date between {query_date_range} AND company_type NOT LIKE 3 GROUP BY DATE_FORMAT(invoice_date, '%Y-%m'), DATE_FORMAT(invoice_date, '%M %Y') ORDER BY DATE_FORMAT(invoice_date, '%Y-%m') ASC;"""
         try:
-            value =await queryFunction(query);
+            value =await queryFunction(query)
         except Exception as e:
             print("error inside query function",e)
         return {

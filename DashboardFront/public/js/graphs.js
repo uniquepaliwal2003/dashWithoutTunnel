@@ -497,6 +497,34 @@ async function totalUniqueContratorPaidPerMonth() {
 }
 totalUniqueContratorPaidPerMonth();
 
+//bar chart for total unique contractors paid per month
+async function getManagerForOptionsInPlcPerManager() {
+  dataList = "";
+  const apiUrl = `http://${port}/api/getListOfAccountManager`;
+  await fetch(apiUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((d) => {
+      dataList = d.data;
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+    let select = document.getElementById("selectForAccountManager");
+    dataList.forEach(element => {
+      console.log(element[0])
+      let newOption = document.createElement("option");
+      newOption.value = element[0]; // Set the value attribute
+      newOption.text = `${element[2]} ${element[3]}`; // Set the text content
+      select.appendChild(newOption);
+    });
+}
+getManagerForOptionsInPlcPerManager();
+
 //Bar chart for total management fees each month
 async function totalManagementFeesDeducted() {
   dataList = "";
