@@ -43,26 +43,6 @@ def new_close_mysql_connection(mysql_connection):
 
 
 
-# # SSH configuration
-# # ssh_host = '159.65.125.228'
-# # ssh_port = 22
-# # ssh_username = 'pranaysanghvi'
-# # ssh_key_path = 'icon'
-
-# # MySQL database configuration
-# # mysql_host = '127.0.0.1'
-# # mysql_port = 3306
-# # mysql_user = 'pranaysanghvi'
-# # mysql_password = 'dmBNDvdQckCnN7/'
-# # mysql_database = 'icon_db'
-
-
-
-
-
-
-
-
 
 
 
